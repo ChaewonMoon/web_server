@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>MHE SENSOR PROJECT</title>
+
+<!-- Bootstrap -->
+<link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">MHE_SENSOR_PROJECT</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+		<!-- 			<li><a href="/form.html">회원가입</a></li>
+					<li><a href="/list.html">사용자 목록</a></li> -->
+					
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<div class="container">
+		<table class="table table-condensed">
+			<caption>센서 목록 및 값</caption>
+			<thead>
+				<tr>
+					<th>&nbsp;&nbsp;MAC</th>
+					<td>&nbsp;&nbsp;ID</td>
+					<td>&nbsp;&nbsp; Activity</td>
+					<td>&nbsp;Vector0</td>
+					<td>&nbsp;Vector1</td>
+					<td>&nbsp;Vector2</td>
+					<td>&nbsp;Vector3</td>
+					<td>&nbsp;Vector4</td>
+					<td>&nbsp;Vector5</td>
+					<td>&nbsp;Vector6</td>
+					<td>&nbsp;Vector7</td>
+					<td>&nbsp;Vector8</td>
+					<td>&nbsp;Vector9</td>
+					<td>&nbsp;Vector10</td>
+					<td>&nbsp;Vector11</td>
+					<td>&nbsp;Vector12</td>
+					<td>&nbsp;Vector13</td>
+					<td>&nbsp;&nbsp;time</td>
+				</tr>
+			</thead>
+			<tbody>
+			
+			
+				{{#mhe_sensordatas}}
+				<tr>
+					<th scope="row">{{MAC}}</th>
+					<td>{{ID}}</td>
+					<td>{{Activity}}</td>
+					<td>{{Vector0}}</td>
+					<td>{{Vector1}}</td>
+					<td>{{Vector2}}</td>
+					<td>{{Vector3}}</td>
+					<td>{{Vector4}}</td>
+					<td>{{Vector5}}</td>
+					<td>{{Vector6}}</td>
+					<td>{{Vector7}}</td>
+					<td>{{Vector8}}</td>
+					<td>{{Vector9}}</td>
+					<td>{{Vector10}}</td>
+					<td>{{Vector11}}</td>
+					<td>{{Vector12}}</td>
+					<td>{{Vector13}}</td>
+					<td>{{time}}</td>
+				</tr>
+				{{/mhe_sensordatas}}
+			</tbody>
+			
+			
+		</table>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+</body>
+</html> 
