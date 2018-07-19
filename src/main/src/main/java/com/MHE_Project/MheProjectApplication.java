@@ -5,11 +5,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 //import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @SpringBootApplication
-@ComponentScan(basePackages={"com.MHE_Project.web", "com.MHE_Project.domain"})
+@ComponentScan(basePackages={"net.MHE_Project.web"})
 @EnableAutoConfiguration
 public class MheProjectApplication {
 	
