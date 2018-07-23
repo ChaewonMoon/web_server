@@ -2,6 +2,10 @@ package com.MHE_Project.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,4 +90,29 @@ public class UserController {
 		model.addAttribute("CW", mhe_sensordatas);
 		return "list";
 	}
+	
+	
+	@GetMapping("/Search")
+	public String SelectedlistMAC(String q, Model model) {
+		System.out.println("Search : q - " + q);
+		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByMAC(q);
+		model.addAttribute("CW",mhe_sensordatas);
+		return "list";
+	}
+
+	@GetMapping("/SearchId")
+	public String SelectedlistID(String q2, Model model) {
+		System.out.println("Search : q2 - " + q2);
+		List<MHE_SensorData> mhe_sensordatas2 = mhe_sensorDataRepository.findByID(q2);
+		model.addAttribute("CW",mhe_sensordatas2);
+		return "list";
+	}
+	
+	@GetMapping("/SearchTime")
+	public String SelectedlistTIME(String q3, Model model) {
+		System.out.println("Search : q3 - " + q3);
+		List<MHE_SensorData> mhe_sensordatas3 = mhe_sensorDataRepository.findByTIME(q3);
+		model.addAttribute("CW",mhe_sensordatas3);
+		return "list";
+	} 
 }

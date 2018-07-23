@@ -8,6 +8,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+
+/**
+ * 
+ * This project created by @author 문채원 on July,2018
+ *
+ */
+
+
 @SpringBootApplication
 @ComponentScan(basePackages={"com.MHE_Project.web", "com.MHE_Project.domain"})
 @EnableAutoConfiguration
