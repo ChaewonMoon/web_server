@@ -11,6 +11,44 @@
 <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css"
 	rel="stylesheet">
 
+<style>
+
+table.type08 {
+    border-collapse: collapse;
+    text-align: center;
+    line-height: 1.5;
+    border-left: 1px solid #ccc;
+    margin: 20px 10px;
+}
+
+table.type08 thead th {
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 2px solid #c00;
+    background: #dcdcd1;
+}
+table.type08 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #ececec;
+}
+table.type08 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+</style>
+
+
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -40,7 +78,30 @@
 		<!-- /.container-fluid -->
 	</nav>
 	<div class="container">
-		<table class="table table-condensed">
+
+		<form action="/Search">
+			<div>
+				<input type="search" id="mySearch" name="q"
+				 placeholder="MAC">
+				<button>Search</button>
+			</div>
+		</form>
+			<form action="/SearchId">
+			<div>
+				<input type="search" id="mySearch" name="q2"
+				 placeholder="ID">
+				<button>Search</button>
+			</div>
+		</form>
+			<form action="/SearchTime">
+			<div>
+				<input type="search" id="mySearch" name="q3"
+				 placeholder="TIME">
+				<button>Search</button>
+			</div>
+		</form>
+		<table class="type08">
+		
 			<caption>센서 목록 및 값</caption>
 			<thead>
 				<tr>

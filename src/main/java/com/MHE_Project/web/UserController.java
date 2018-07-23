@@ -82,7 +82,7 @@ public class UserController {
 		System.out.println("[GET] a : " + a + "b : "+ b);
 		return "index";
 	}
-	*/
+	test*/
 	
 	@GetMapping("/list")
 	public String list(Model model) {
