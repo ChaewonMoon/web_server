@@ -113,6 +113,16 @@ public class UserController {
 		System.out.println("Search : q3 - " + q3);
 		List<MHE_SensorData> mhe_sensordatas3 = mhe_sensorDataRepository.findByTIME(q3);
 		model.addAttribute("CW",mhe_sensordatas3);
+		System.out.println("입력받은 time 데이터: " + mhe_sensordatas3);
+		return "list";
+	} 
+	
+	@GetMapping("/SearchPeriod")
+	public String SelectedlistTIME(String q4, String q5 , Model model) {
+		System.out.println("Search : q4 :" + q4 +"q5:" +  q5);
+		List<MHE_SensorData> mhe_sensordatas4 = mhe_sensorDataRepository.findByPERIOD(q4,q5);
+		model.addAttribute("CW",mhe_sensordatas4);
+		System.out.println("입력받은 period 데이터: " + mhe_sensordatas4);
 		return "list";
 	} 
 }
