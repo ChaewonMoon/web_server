@@ -137,11 +137,19 @@ public class MHE_SensorData {
 	}
 	@Override
 	public String toString() {
+<<<<<<< HEAD
 		return "MHE_SensorData MAC=" + MAC + ",   UID=" + UID + ", Activity=" + Activity + ", Vector0=" + Vector0
 				+ ", Vector1=" + Vector1 + ", Vector2=" + Vector2 + ", Vector3=" + Vector3 + ", Vector4=" + Vector4
 				+ ", Vector5=" + Vector5 + ", Vector6=" + Vector6 + ", Vector7=" + Vector7 + ", Vector8=" + Vector8
 				+ ", Vector9=" + Vector9 + ", Vector10=" + Vector10 + ", Vector11=" + Vector11 + ", Vector12="
 				+ Vector12 + ", Vector13=" + Vector13 + ", time=" + time;
+=======
+		return "MHE_SensorData MAC=" + MAC + ", ID=" + ID + ", Activity=" + Activity + ", Vector0=" + Vector0
+				+ ", Vector1=" + Vector1 + ", Vector2=" + Vector2 + ", Vector3=" + Vector3 + ", Vector4=" + Vector4
+				+ ", Vector5=" + Vector5 + ", Vector6=" + Vector6 + ", Vector7=" + Vector7 + ", Vector8=" + Vector8
+				+ ", Vector9=" + Vector9 + ", Vector10=" + Vector10 + ", Vector11=" + Vector11 + ", Vector12="
+				+ Vector12 + ", Vector13=" + Vector13 + ", time=" + time ";
+>>>>>>> 28a36590d0c42b8bae3a147c15b978fb2e4563b8
 	}
 	
 	
