@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.springframework.lang.Nullable;
+
 @Entity
 public class MHE_SensorData {
 	@Id
@@ -28,6 +30,7 @@ public class MHE_SensorData {
 	private int Vector10;
 	private int Vector11;
 	private int Vector12;
+	@Nullable
 	private String Vector13;
 	private String time;
 	
@@ -129,10 +132,15 @@ public class MHE_SensorData {
 		Vector12 = vector12;
 	}
 	public String getVector13() {
-		return Vector13;
+		if (Vector13 == null) return new String("");
+		else return Vector13;
 	}
 	public void setVector13(String vector13) {
-		Vector13 = vector13;
+		if (vector13 == null) {
+			Vector13 = new String ("");
+		}else {
+			Vector13 = vector13;
+		}
 	}
 
 	public String getTime() {
