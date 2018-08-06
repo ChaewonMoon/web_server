@@ -157,5 +157,10 @@ public class MHE_SensorData {
 				+ ", Vector9=" + Vector9 + ", Vector10=" + Vector10 + ", Vector11=" + Vector11 + ", Vector12="
 				+ Vector12 + ", Vector13=" + Vector13 + ", time=" + time;
 	}
+	
+	public String toCVS() {
+		return MAC+","+UID+","+Activity+","+Vector0+","+Vector1+","+Vector2+","+Vector3+","+Vector4
+				+Vector5+","+Vector6+","+Vector7+","+Vector8+","+Vector9+","+Vector10+","+Vector11+","+Vector12+","+time+"\n";
+	}
 }
 

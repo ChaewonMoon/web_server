@@ -1,5 +1,8 @@
 package com.MHE_Project.web;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.MHE_Project.domain.MHE_SensorData;
 import com.MHE_Project.domain.MHE_SensorDataRepository;
@@ -94,7 +96,14 @@ public class UserController {
 		return "list";
 	}
 
-	/*
+	String setContent(List<MHE_SensorData> mhe_sensordatas) {
+		String ret = "MAC,UID,Activity,Vector0,Vector1,Vector2,Vector3,Vector4,Vector5,Vector6,Vector7,Vector8,Vector9,Vector10,Vector11,Vector12,time\n";
+		for(MHE_SensorData i:mhe_sensordatas) {
+			ret += i.toCVS();
+		}
+		return ret;
+	}
+	
 	@GetMapping("/DownloadMAC")
 	public ResponseEntity<String> getSelectedMAC(String q, Model model){
 		
@@ -102,12 +111,12 @@ public class UserController {
 		
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "text/csv; charset=MS949");
-		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q +".csv" + "\"");
+		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
 		
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
-	*/
+	
 	
 	@GetMapping("/SearchId")
 	public String SelectedlistID(String q2, Model model) {
@@ -117,20 +126,18 @@ public class UserController {
 		return "list";
 	}
 
-	/*
-	@RequestMapping("/DownloadID")
+	@GetMapping("/DownloadID")
 	public ResponseEntity<String> getSelectedID(String q2, Model model){
 		
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByID(q2); //DB에서 가져온 데이터 리스트
 		
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "text/csv; charset=MS949");
-		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q2 +".csv" + "\"");
+		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_ID:" + q2 + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
 		
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
-	*/
 	
 	@GetMapping("/SearchTime")
 	public String SelectedlistTIME(String q3, Model model) {
@@ -141,20 +148,18 @@ public class UserController {
 		return "list";
 	}
 
-	/*
-	@RequestMapping("/DownloadTIME")
+	@GetMapping("/DownloadTIME")
 	public ResponseEntity<String> getSelectedTIME(String q3, Model model){
 		
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByTIME(q3); //DB에서 가져온 데이터 리스트
 		
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "text/csv; charset=MS949");
-		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q3 +".csv" + "\"");
+		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_TIME:" + q3 + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
 		
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
-	*/
 	
 	@GetMapping("/SearchPeriod")
 	public String SelectedlistTIME(String q4, String q5, Model model) {
@@ -165,18 +170,16 @@ public class UserController {
 		return "list";
 	}
 
-	/*
-	@RequestMapping("/DownloadPERIOD")
+	@GetMapping("/DownloadPERIOD")
 	public ResponseEntity<String> getSelectedPERIOD(String q4,String q5, Model model){
 		
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByPERIOD(q4,q5); //DB에서 가져온 데이터 리스트
 		
 		HttpHeaders header = new HttpHeaders();
 		header.add("Content-Type", "text/csv; charset=MS949");
-		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q4 +"~"+ q5 +".csv" + "\"");
+		header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_PERIOD:" + q4 + "_"+ q5 + "_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
 		
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
-*/	
 }
