@@ -24,4 +24,6 @@ public interface MHE_SensorDataRepository extends JpaRepository<MHE_SensorData, 
 	@Query("SELECT s FROM MHE_SensorData s WHERE s.time BETWEEN (:TIMEP1) AND (:TIMEP2) ORDER BY s.id ASC")
 	List<MHE_SensorData> findByPERIOD(@Param("TIMEP1") String q4, @Param("TIMEP2") String q5);
 	
+	
 }
+

@@ -1,10 +1,11 @@
 package com.MHE_Project.web;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -26,12 +27,42 @@ public class UserController {
 
 	@Autowired
 	private MHE_SensorDataRepository mhe_sensorDataRepository;
-
+	
 	/*
 	 * @PostMapping("/create") public String create(User user) {
 	 * System.out.println("user : " + user); users.add(user); return "index"; }
 	 */
 
+	@GetMapping("/logout")
+	public String loginFrom(HttpSession session) {
+		session.removeAttribute("sessionedUser");
+		return "redirect:/";
+	}
+	
+	/*로그인 기능 구현 ID=mhe PASSWORD=mandohella*/
+	@PostMapping("/login")
+	public String login(String userId, String password, HttpSession session) {
+		
+		String user = userId;
+		String s1= "mhe";
+		String s2 = "mandohella";
+		
+		if(!s1.equals(userId)) {
+			System.out.println("ID Login Failure!");
+			return "redirect:/";
+		}
+		if(!s2.equals(password)) {
+			System.out.println("PW Login Failure!");
+			return "redirect:/";	
+		}
+		
+		System.out.println("Login Success!");
+		session.setAttribute("sessionedUser",user); /*세션 정보를 통해 로그인한 사용자만 접근할 수 있도록 구현 */ 
+		
+		return "redirect:/list";
+	}
+	
+	
 	@PostMapping("/create")
 	public String test(String a) {
 		String[] ar = a.split(","); // 총 몇개의 데이터가 들어가는지? ar에 다 배열로 저장된다
@@ -81,8 +112,16 @@ public class UserController {
 	 * System.out.println("[GET] a : " + a + "b : "+ b); return "index"; } test
 	 */
 
+	
+	/* 구현 해야 할 것 - localhost:8080/list를 쳤을 때 정보가 보이지 않도록 설정해야함 */
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, HttpSession session) {
+		Object sessionedUser = session.getAttribute("sessionedUser");
+
+		if(sessionedUser==null) {
+			return "redirect:/";
+		}
+		
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findAll();
 		model.addAttribute("CW", mhe_sensordatas);
 		return "list";
@@ -93,6 +132,7 @@ public class UserController {
 		System.out.println("Search : q - " + q);
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByMAC(q);
 		model.addAttribute("CW", mhe_sensordatas);
+		System.out.println("입력받은 mac 데이터: " + mhe_sensordatas);
 		return "list";
 	}
 
@@ -123,6 +163,7 @@ public class UserController {
 		System.out.println("Search : q2 - " + q2);
 		List<MHE_SensorData> mhe_sensordatas2 = mhe_sensorDataRepository.findByID(q2);
 		model.addAttribute("CW", mhe_sensordatas2);
+		System.out.println("입력받은 id 데이터: " + mhe_sensordatas2);
 		return "list";
 	}
 

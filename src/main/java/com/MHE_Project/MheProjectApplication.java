@@ -11,9 +11,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 
- * This project created by @author 문채원 on July,2018
+ * created by @author 문채원 on July,2018
  *
- */
+ *
+ **/
 
 
 @SpringBootApplication
