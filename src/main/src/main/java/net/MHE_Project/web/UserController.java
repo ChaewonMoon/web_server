@@ -1,20 +1,28 @@
-package net.MHE_Project.web;
+package com.MHE_Project.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import net.MHE.domain.MHE_SensorData;
-
-import org.springframework.web.bind.annotation.GetMapping;
+import com.MHE_Project.domain.MHE_SensorData;
+import com.MHE_Project.domain.MHE_SensorDataRepository;
 
 @Controller
 public class UserController {
 	private List<User> users = new ArrayList<User>();
-	private List<MHE_SensorData> mhe_sensordatas = new ArrayList<MHE_SensorData>();
+	//private List<MHE_SensorData> mhe_sensordatas = new ArrayList<MHE_SensorData>();
+	
+	@Autowired
+	private MHE_SensorDataRepository mhe_sensorDataRepository;
 	
 /*	@PostMapping("/create")
 	public String create(User user) 
@@ -38,7 +46,7 @@ public class UserController {
 		
 		for(int i=0;i<ar.length;i+=mNumMemberSensorData) {
 			mhe_sensorData[i/mNumMemberSensorData].setMAC(ar[i]);
-			mhe_sensorData[i/mNumMemberSensorData].setID(ar[i+1]);
+			mhe_sensorData[i/mNumMemberSensorData].setUID(ar[i+1]);
 			mhe_sensorData[i/mNumMemberSensorData].setActivity(Integer.parseInt(ar[i+2]));
 			mhe_sensorData[i/mNumMemberSensorData].setVector0(Integer.parseInt(ar[i+3]));
 			mhe_sensorData[i/mNumMemberSensorData].setVector1(Integer.parseInt(ar[i+4]));
@@ -56,7 +64,8 @@ public class UserController {
 			mhe_sensorData[i/mNumMemberSensorData].setVector13(ar[i+16]);
 			mhe_sensorData[i/mNumMemberSensorData].setTime(ar[i+17]);
 			
-			mhe_sensordatas.add(mhe_sensorData[i/mNumMemberSensorData]);
+			//mhe_sensordatas.add(mhe_sensorData[i/mNumMemberSensorData]);
+			mhe_sensorDataRepository.save(mhe_sensorData[i/mNumMemberSensorData]);
 		}
 		
 		
@@ -73,11 +82,37 @@ public class UserController {
 		System.out.println("[GET] a : " + a + "b : "+ b);
 		return "index";
 	}
-	*/
+	test*/
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-		model.addAttribute("mhe_sensordatas", mhe_sensordatas);
+		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findAll();
+		model.addAttribute("CW", mhe_sensordatas);
 		return "list";
 	}
+	
+	
+	@GetMapping("/Search")
+	public String SelectedlistMAC(String q, Model model) {
+		System.out.println("Search : q - " + q);
+		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByMAC(q);
+		model.addAttribute("CW",mhe_sensordatas);
+		return "list";
+	}
+
+	@GetMapping("/SearchId")
+	public String SelectedlistID(String q2, Model model) {
+		System.out.println("Search : q2 - " + q2);
+		List<MHE_SensorData> mhe_sensordatas2 = mhe_sensorDataRepository.findByID(q2);
+		model.addAttribute("CW",mhe_sensordatas2);
+		return "list";
+	}
+	
+	@GetMapping("/SearchTime")
+	public String SelectedlistTIME(String q3, Model model) {
+		System.out.println("Search : q3 - " + q3);
+		List<MHE_SensorData> mhe_sensordatas3 = mhe_sensorDataRepository.findByTIME(q3);
+		model.addAttribute("CW",mhe_sensordatas3);
+		return "list";
+	} 
 }
