@@ -21,17 +21,8 @@ import com.MHE_Project.domain.MHE_SensorDataRepository;
 
 @Controller
 public class UserController {
-	private List<User> users = new ArrayList<User>();
-	// private List<MHE_SensorData> mhe_sensordatas = new
-	// ArrayList<MHE_SensorData>();
-
 	@Autowired
 	private MHE_SensorDataRepository mhe_sensorDataRepository;
-	
-	/*
-	 * @PostMapping("/create") public String create(User user) {
-	 * System.out.println("user : " + user); users.add(user); return "index"; }
-	 */
 
 	@GetMapping("/logout")
 	public String loginFrom(HttpSession session) {
@@ -127,6 +118,51 @@ public class UserController {
 		return "list";
 	}
 	
+	/* 다중 검색을 하기 위해 쿼리(mhe_sensordatarepository에 위치) 맵핑 하는 컨트롤러*/
+	
+	@GetMapping("/SearchAll")
+	public String SelectedlistAll(String q,String q2,String q4,String q5, Model model) {
+		System.out.println("[log] Search :" +q+q2+q4+q5);
+		List<MHE_SensorData> mhe_sensordatas;
+		
+		if(q.equals("") && !q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByIDPERIOD(q2,q4,q5);
+			System.out.println("입력받은 mac 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+		}
+		else if(!q.equals("") && q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMACPERIOD(q,q4,q5);
+			System.out.println("입력받은 id 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+		}
+		else if(!q.equals("") && !q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMACID(q,q2);
+			System.out.println("입력받은 period 데이터: " + mhe_sensordatas+q+q2+q4+q5);
+		}
+		else if(q.equals("") && q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByPERIOD(q4,q5);
+			System.out.println("입력받은 mac, id 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+		}
+		else if(q.equals("") && !q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByID(q2);
+			System.out.println("입력받은 mac, period 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+		}
+		else if(!q.equals("") && q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMAC(q);
+			System.out.println("입력받은 id 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+		}
+		else if(!q.equals("") && !q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
+			System.out.println("입력받은 mac, id, period 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+		}
+		else{
+			mhe_sensordatas = mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
+			System.out.println("입력받은 데이터가 없을 때: " + mhe_sensordatas);
+		}
+				
+		model.addAttribute("CW", mhe_sensordatas);
+
+		return "list";
+	}
+	
 	@GetMapping("/Search")
 	public String SelectedlistMAC(String q, Model model) {
 		System.out.println("Search : q - " + q);
@@ -142,6 +178,71 @@ public class UserController {
 			ret += i.toCVS();
 		}
 		return ret;
+	}
+	
+	@GetMapping("/DownloadAll")
+	public ResponseEntity<String> DownloadAll(String q,String q2,String q4,String q5, Model model) {
+		System.out.println("[log] Download :" +q+q2+q4+q5);
+		List<MHE_SensorData> mhe_sensordatas;
+		HttpHeaders header = new HttpHeaders();
+		
+		if(q.equals("") && !q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByIDPERIOD(q2,q4,q5);
+			
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_ID_PERIOD:" + q2 +"_" +q4+ "_"+ q5 + "_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(!q.equals("") && q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMACPERIOD(q,q4,q5);
+
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC_PERIOD:" + q+ "_"+ q4 + "_"+ q5 + "_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(!q.equals("") && !q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMACID(q,q2);
+			
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC_ID:" + q+ "_"+ q2 + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(q.equals("") && q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByPERIOD(q4,q5);
+			
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_PERIOD:" + q4 + "_"+ q5 + "_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(q.equals("") && !q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByID(q2);
+			
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_ID:" + q2 + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(!q.equals("") && q2.equals("") && q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByMAC(q);
+			
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC:" + q + "_" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else if(!q.equals("") && !q2.equals("") && !q4.equals("")) {
+			mhe_sensordatas =mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
+					
+			header.add("Content-Type", "text/csv; charset=MS949");
+			header.add("Content-Disposition", "attachment; filename=\"" + "MHE_Result_MAC_ID_PERIOD:"+ q+ "_"+ q2+ "_"+q4 + "_"+ q5 + "_"+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss")) +".csv" + "\"");
+			
+		}
+		else{
+			mhe_sensordatas = mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
+			System.out.println("입력받은 데이터가 없을 때: " + mhe_sensordatas);
+		}
+				
+		model.addAttribute("CW", mhe_sensordatas);
+
+		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/DownloadMAC")
@@ -168,7 +269,7 @@ public class UserController {
 	}
 
 	@GetMapping("/DownloadID")
-	public ResponseEntity<String> getSelectedID(String q2, Model model){
+	public ResponseEntity<String> getSelectedID(String q2,Model model){
 		
 		List<MHE_SensorData> mhe_sensordatas = mhe_sensorDataRepository.findByID(q2); //DB에서 가져온 데이터 리스트
 		

@@ -1,5 +1,9 @@
 package com.MHE_Project.web;
 
+
+/*연습용으로 만든 파일이니 신경쓰지 않으셔도 됩니다 */
+
+
 public class User {
 	private String userID;
 	private String password;
