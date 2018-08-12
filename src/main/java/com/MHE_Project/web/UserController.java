@@ -127,31 +127,31 @@ public class UserController {
 		
 		if(q.equals("") && !q2.equals("") && !q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByIDPERIOD(q2,q4,q5);
-			System.out.println("입력받은 mac 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+			System.out.println("입력받은 mac id데이터: " + mhe_sensordatas+ q+q2+q4+q5);
 		}
 		else if(!q.equals("") && q2.equals("") && !q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByMACPERIOD(q,q4,q5);
-			System.out.println("입력받은 id 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+			System.out.println("입력받은 mac period 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
 		}
 		else if(!q.equals("") && !q2.equals("") && q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByMACID(q,q2);
-			System.out.println("입력받은 period 데이터: " + mhe_sensordatas+q+q2+q4+q5);
+			System.out.println("입력받은 mac id 데이터: " + mhe_sensordatas+q+q2+q4+q5);
 		}
 		else if(q.equals("") && q2.equals("") && !q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByPERIOD(q4,q5);
-			System.out.println("입력받은 mac, id 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+			System.out.println("입력받은 period 데이터: " + mhe_sensordatas + q+q2+q4+q5);
 		}
 		else if(q.equals("") && !q2.equals("") && q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByID(q2);
-			System.out.println("입력받은 mac, period 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+			System.out.println("입력받은 id 데이터: " + mhe_sensordatas + q+q2+q4+q5);
 		}
 		else if(!q.equals("") && q2.equals("") && q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByMAC(q);
-			System.out.println("입력받은 id 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
+			System.out.println("입력받은 mac 데이터: " + mhe_sensordatas+ q+q2+q4+q5);
 		}
 		else if(!q.equals("") && !q2.equals("") && !q4.equals("")) {
 			mhe_sensordatas =mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
-			System.out.println("입력받은 mac, id, period 데이터: " + mhe_sensordatas + q+q2+q4+q5);
+			System.out.println("입력받은 all 데이터: " + mhe_sensordatas + q+q2+q4+q5);
 		}
 		else{
 			mhe_sensordatas = mhe_sensorDataRepository.findByALL(q,q2,q4,q5);
@@ -244,7 +244,7 @@ public class UserController {
 
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 	}
-	
+	/*	
 	@GetMapping("/DownloadMAC")
 	public ResponseEntity<String> getSelectedMAC(String q, Model model){
 		
@@ -257,7 +257,7 @@ public class UserController {
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
-	
+
 	
 	@GetMapping("/SearchId")
 	public String SelectedlistID(String q2, Model model) {
@@ -324,4 +324,5 @@ public class UserController {
 		return new ResponseEntity<String>(setContent(mhe_sensordatas), header, HttpStatus.CREATED);
 		
 	}
+	*/
 }
